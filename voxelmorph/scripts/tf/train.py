@@ -50,6 +50,7 @@ import tensorflow as tf
 import voxelmorph_custom as vxm
 import pandas as pd
 
+from datetime import datetime
 
 # disable eager execution
 # tf.compat.v1.disable_eager_execution()
@@ -402,6 +403,13 @@ hist_df = pd.DataFrame(history.history)
 if os.name == 'nt':
     hist_csv_file = 'I:\cluster_logs\history_bg_vscode.csv'
 elif os.name == 'posix':
-    hist_csv_file = '/work/scratch/yogeshappa/cluster_logs/history.csv'
+    hist_csv_filepath = '/work/scratch/yogeshappa/cluster_logs/'
+    
+    # https://www.geeksforgeeks.org/how-to-create-filename-containing-date-or-time-in-python/
+    current_datetime        = datetime.now()
+    str_current_datetime    = str(current_datetime)
+    hist_csv_filename       = 'history_' + str_current_datetime + '.csv'
+    hist_csv_file           = hist_csv_filepath + hist_csv_filename
+
 with open(hist_csv_file, mode='w') as f:
     hist_df.to_csv(f)
